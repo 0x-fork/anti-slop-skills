@@ -3,12 +3,14 @@
 </p>
 
 <p align="center">
-  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-2ea44f" alt="License: MIT"></a>
-  <a href="https://github.com/miqdadbadjuber/anti-slop/releases"><img src="https://img.shields.io/github/v/release/miqdadbadjuber/anti-slop?label=version&color=1f6feb" alt="Version"></a>
+  <a href="https://trendshift.io/repositories/137042?utm_source=trendshift-badge&amp;utm_medium=badge&amp;utm_campaign=badge-trendshift-137042" target="_blank" rel="noopener noreferrer"><img src="https://trendshift.io/api/badge/trendshift/repositories/137042/daily?language=JavaScript" alt="Trendshift Daily Trending" width="250" height="55"/></a>
+  <a href="https://trendshift.io/repositories/137042?utm_source=trendshift-badge&amp;utm_medium=badge&amp;utm_campaign=badge-trendshift-137042" target="_blank" rel="noopener noreferrer"><img src="https://trendshift.io/api/badge/trendshift/repositories/137042/weekly?language=JavaScript" alt="Trendshift Weekly Trending" width="250" height="55"/></a>
 </p>
 
 <p align="center">
-  <a href="https://skills.sh/miqdadbadjuber/anti-slop"><img src="https://skills.sh/b/miqdadbadjuber/anti-slop" alt="skills.sh"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-2ea44f" alt="License: MIT"></a>
+  <a href="https://github.com/miqdadbadjuber/anti-slop/releases"><img src="https://img.shields.io/github/v/release/miqdadbadjuber/anti-slop?label=version&color=1f6feb" alt="Version"></a>
+  <a href="https://skills.sh/miqdadbadjuber/anti-slop"><img src="https://skills.sh/b/miqdadbadjuber/anti-slop" alt="Skills.sh"></a>
 </p>
 
 <h1 align="center">Anti Slop: Rules for AI Coding Agents</h1>
