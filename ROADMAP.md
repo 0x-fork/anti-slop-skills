@@ -75,7 +75,7 @@ Every door is verified against the vendor's current documentation before its ver
 
 | Version | Item | What it means |
 |---------|------|---------------|
-| v3.2.22 | Maintenance | A macOS probe, because none of the door probes above ran on it, so a report from that platform can be split into what the installer got wrong and what the agent's own configuration explains. No new agent: a `windows-latest` CI job, because CI runs on Linux alone while this repository is developed on Windows, plus a re-check of the plugin-door probes against real installs and probes for the three doors the installer still cannot see (Kimi Code, Cline, and Oh My Pi), so the notice that follows an install names all seven rather than four. |
+| v3.2.22 | Maintenance | A macOS probe, because none of the door probes above ran on it, so a report from that platform can be split into what the installer got wrong and what the agent's own configuration explains. No new agent: the round re-checks the plugin-door probes against real installs and adds probes for the three doors the installer still cannot see (Kimi Code, Cline, and Oh My Pi), so the notice that follows an install names all seven rather than four. |
 
 Beyond the numbered plan, with no promised version:
 
