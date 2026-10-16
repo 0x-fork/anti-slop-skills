@@ -11,11 +11,14 @@ permissions:
 jobs:
   check:
     strategy:
+      # A red ubuntu job should not cancel the windows one; both should report.
+      fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest]
     runs-on: ${{ matrix.os }}
     steps:
-      # Preserving LF checkout avoids false diffs when sync-skills writes LF.
+      # Both runners check out identical bytes this way, so every step below
+      # compares the same files on Linux and Windows.
       - name: Configure git line endings
         run: git config --global core.autocrlf false
 
