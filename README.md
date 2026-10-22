@@ -15,7 +15,7 @@
 
 # Anti Slop: Rules for AI Coding Agents
 
-### A rulebook that stops an AI coding agent shipping generic UI, text, and and AI-shaped code..
+### A rulebook that stops an AI coding agent shipping generic UI, text, and AI-shaped code.
 
 **A filter, not a style guide.** No prescribed colors, fonts, or layouts, and direction stays yours.
 
