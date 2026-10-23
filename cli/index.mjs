@@ -46,7 +46,7 @@ function printPluginDoors(found) {
   console.log('\nInstalled as a plugin (these keep their own copy, so updating them is separate):')
   for (const p of found) {
     console.log(`  ${p.door.label}${p.version ? ` ${p.version}` : ''}`)
-    console.log(`    ${p.door.update}`)
+    for (const line of p.door.update.split('\n')) console.log(`    ${line}`)
   }
 }
 

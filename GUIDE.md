@@ -185,7 +185,7 @@ npx antislop-ai
 Answer the questions exactly as you did the first time. When it reaches folders you already have, it prints what it found before asking anything:
 
 ```
-▲ Already here: antislop 3.2.20. This installer carries 3.2.21.
+▲ Already here: antislop 3.2.21. This installer carries 3.2.22.
 ```
 
 Then it asks one extra question:
@@ -422,7 +422,13 @@ Without it, Cline keeps what is installed and tells you so.
 
 #### Remove
 
-Cline documents no plugin uninstall command, only `cline plugin install`, so delete the plugin's folder under `~/.cline/plugins/_installed/` instead. Nothing was copied into your project, so that is the whole removal.
+Cline's documentation page covers only `cline plugin install`, but the CLI ships the other half:
+
+```bash
+cline plugin uninstall antislop
+```
+
+`remove` and `rm` are aliases, and `--cwd .` makes Cline search the project's `.cline/plugins/` before the global one. If your CLI does not have the command yet, delete the folder that holds antislop's `skills/` under `~/.cline/plugins/_installed/` instead; the folder name carries a source hash, so open it and check before deleting. Nothing was copied into your project, so either way that is the whole removal.
 
 ### Oh My Pi plugin
 

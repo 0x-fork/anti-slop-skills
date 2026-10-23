@@ -11,14 +11,14 @@ permissions:
 jobs:
   check:
     strategy:
-      # A red ubuntu job should not cancel the windows one; both should report.
+      # A red ubuntu job should not cancel the other two; all three should report.
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, windows-latest]
+        os: [ubuntu-latest, windows-latest, macos-latest]
     runs-on: ${{ matrix.os }}
     steps:
-      # Both runners check out identical bytes this way, so every step below
-      # compares the same files on Linux and Windows.
+      # Every runner checks out identical bytes this way, so the steps below
+      # compare the same files on Linux, Windows, and macOS.
       - name: Configure git line endings
         run: git config --global core.autocrlf false
 

@@ -139,6 +139,73 @@ function findClone(dir) {
   return fs.existsSync(dir) ? { path: dir, version: cloneVersion(dir) } : null
 }
 
+// Kimi and Oh My Pi name the installed copy after the plugin or the marketplace,
+// so the copy is found by what it contains, not by its folder name.
+function findCopyUnder(dir) {
+  for (const name of listDirs(dir)) {
+    const candidate = path.join(dir, name)
+    if (fs.existsSync(path.join(candidate, 'skills', CORE))) {
+      return { path: candidate, version: cloneVersion(candidate) }
+    }
+    // A store can nest an install one level deeper, so check that too.
+    for (const inner of listDirs(candidate)) {
+      const nested = path.join(candidate, inner)
+      if (fs.existsSync(path.join(nested, 'skills', CORE))) {
+        return { path: nested, version: cloneVersion(nested) }
+      }
+    }
+  }
+  return null
+}
+
+// Cline stores each install under a hashed path that varies by source type, so
+// the copy is found by walking the store instead, skipping dependency folders.
+function findNestedCopy(dir, depth) {
+  for (const name of listDirs(dir)) {
+    if (name === 'node_modules' || name === '.git' || name.startsWith('.replace-')) continue
+    const candidate = path.join(dir, name)
+    if (fs.existsSync(path.join(candidate, 'skills', CORE))) {
+      return { path: candidate, version: cloneVersion(candidate) }
+    }
+    if (depth > 0) {
+      const found = findNestedCopy(candidate, depth - 1)
+      if (found) return found
+    }
+  }
+  return null
+}
+
+// Oh My Pi moves plugin state to $XDG_DATA_HOME once that root is initialized,
+// so both places are searched rather than guessing which one is live.
+function ompHomes() {
+  const homes = []
+  if (process.env.XDG_DATA_HOME) homes.push(path.join(process.env.XDG_DATA_HOME, 'omp'))
+  homes.push(path.join(os.homedir(), '.omp'))
+  return [...new Set(homes)]
+}
+
+// The cache folder is <marketplace>___<plugin>___<version>, so the newest
+// install is the highest version rather than whatever the filesystem lists first.
+function findOmp() {
+  for (const home of ompHomes()) {
+    const plugins = path.join(home, 'plugins')
+    const cache = path.join(plugins, 'cache', 'plugins')
+    const matches = listDirs(cache)
+      .map((name) => ({ name, parts: name.split('___') }))
+      .filter((m) => m.parts.length === 3 && m.parts[1] === CORE)
+      .map((m) => ({ dir: path.join(cache, m.name), version: m.parts[2] }))
+      .sort((a, b) => a.version.localeCompare(b.version, undefined, { numeric: true }))
+
+    if (matches.length > 0) {
+      const newest = matches[matches.length - 1]
+      return { path: newest.dir, version: newest.version }
+    }
+    const copy = findCopyUnder(plugins)
+    if (copy) return copy
+  }
+  return null
+}
+
 const claudePlugins = () => path.join(os.homedir(), '.claude', 'plugins', 'installed_plugins.json')
 
 export const PLUGIN_DOORS = [
@@ -172,6 +239,30 @@ export const PLUGIN_DOORS = [
     label: 'Cursor',
     update: 'agent plugin marketplace update https://github.com/miqdadbadjuber/anti-slop',
     find: () => findClone(path.join(os.homedir(), '.cursor', 'plugins', 'local', 'anti-slop')),
+  },
+  {
+    id: 'kimi',
+    label: 'Kimi Code',
+    update: 'In a Kimi Code session: /plugins install https://github.com/miqdadbadjuber/anti-slop',
+    find: () =>
+      findCopyUnder(
+        path.join(process.env.KIMI_CODE_HOME || path.join(os.homedir(), '.kimi-code'), 'plugins', 'managed'),
+      ),
+  },
+  {
+    id: 'cline',
+    label: 'Cline',
+    update: 'cline plugin install https://github.com/miqdadbadjuber/anti-slop.git --force',
+    find: () => {
+      const home = process.env.CLINE_DIR || path.join(os.homedir(), '.cline')
+      return findNestedCopy(path.join(home, 'plugins', '_installed'), 6)
+    },
+  },
+  {
+    id: 'omp',
+    label: 'Oh My Pi',
+    update: 'omp plugin marketplace update anti-slop\nomp plugin upgrade antislop@anti-slop',
+    find: findOmp,
   },
 ]
 

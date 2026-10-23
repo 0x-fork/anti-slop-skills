@@ -356,6 +356,13 @@ try {
   fs.rmSync(mixed, { recursive: true, force: true })
 }
 
+// A door dropped from the list stops being named after an install, and nothing else notices.
+check(
+  'K all seven plugin doors are probed',
+  PLUGIN_DOORS.map((d) => d.id).sort(),
+  ['antigravity', 'claude', 'cline', 'codex', 'cursor', 'kimi', 'omp']
+)
+
 // A door row without a command would print a blank line where the answer belongs.
 check('K every plugin door names itself and its command', PLUGIN_DOORS.filter((d) => !d.id || !d.label || !d.update).map((d) => d.id), [])
 
