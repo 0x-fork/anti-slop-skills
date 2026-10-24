@@ -77,7 +77,7 @@ Every door is verified against the vendor's current documentation before its ver
 
 | Version | Item | What it means |
 |---------|------|---------------|
-| v3.2.24 | Community PR | One new slop pattern, added to the core with its Delivery Gate item. |
+| v3.2.24 | Community PR | Three Hard Gate rules: semantics and interaction affordances, a Core Web Vitals budget, and page basics with a security baseline. |
 | v3.2.25 | Community PR | Additional copywriting rules in antislop-copywriting. |
 | v3.2.26 | DeepSeek harness plugin | The harness becomes the eighth plugin door once its documentation is confirmed. |
 
