@@ -164,9 +164,9 @@ The core prevents slop but cannot invent direction. `DESIGN.md` (yours) supplies
 | Skill | Covers | Pick it for |
 |-------|--------|-------------|
 | antislop | The core filter: rules, tiers, the Delivery Gate, liveliness | Everything. Always loaded |
-| antislop-ui | Layout, color, components, decoration, motion, structure | UI and visual work |
+| antislop-ui | Layout, color, components, decoration, motion, structure, performance | UI and visual work |
 | antislop-copywriting | Headlines, CTAs, tone, fake stats, anti-AI writing, markdown hygiene | Copy and text |
-| antislop-human | Contrast, keyboard, focus, states | Accessibility |
+| antislop-human | Contrast, keyboard, focus, states, interaction affordances | Accessibility |
 | antislop-layoutmobile | Reflow across screen widths, breakpoints, grids, overflow, tap targets | Responsive work |
 | antislop-code | AI-slop comments: which to remove, which to keep | Comment cleanup |
 

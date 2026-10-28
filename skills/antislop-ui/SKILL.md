@@ -1,6 +1,6 @@
 ---
 name: antislop-ui
-description: "UI and visual skill for antislop. Use when building or editing any interface: color, layout, components, motion. Load with the core."
+description: "UI and visual skill for antislop. Use when building or editing any interface: color, layout, components, motion, and page performance. Load with the core."
 allowed-tools: Read Write Edit Glob Grep
 ---
 # antislop-ui
@@ -312,9 +312,15 @@ A page that looks finished but shifts under the thumb or shows its main image la
 - **Why:** nothing paints until someone else's server answers, which on a phone on a slow network is the whole first impression (R-40).
 - **Fix:** `defer`/`async`, or load on interaction.
 
-### Web Baseline (optional)
+## Page Basics
 
-[references/WEB-BASELINE.md](references/WEB-BASELINE.md) lists page basics and security defaults (doctype, mixed content, client secrets). It is a checklist to run when the task asks for it, not a gate.
+Optional page-level checks. Not a gate.
+
+### Web Baseline Checklist
+
+- **Tell:** a page shipped with no doctype, mixed `http://` content, a secret in client code, or an unpinned third-party script.
+- **Why:** none of it shows in a screenshot, so it is the first thing skipped, and each one is expensive to find after launch.
+- **Fix:** run the checklist in [references/WEB-BASELINE.md](references/WEB-BASELINE.md) when the task asks for a production-ready page or a web-quality review.
 
 ## UI Skill Checklist
 

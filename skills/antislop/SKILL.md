@@ -431,9 +431,9 @@ If an element genuinely cannot have a destination yet, remove it instead of ship
 
 #### R-39 — Accessible Semantics & Interaction Affordances
 
-Every control the task builds or edits must say what it is and that it can be used. Keyboard operation and the focus indicator are R-32; touch target size is R-03.
+Every control and image the task builds or edits must say what it is; every control must also show that it can be used. Keyboard operation and the focus indicator are R-32; touch target size is R-03.
 
-- **REQUIRED**: every enabled interactive element (`a[href]`, `button`, `summary`, `select`, `label[for]`, checkbox, radio, custom `role="button"`/`tab`/`switch`) shows `cursor: pointer`, set once in the base CSS layer; disabled controls show `cursor: not-allowed`
+- **REQUIRED**: every enabled interactive element (`a[href]`, `button`, `summary`, `select`, `label[for]`, a label wrapping its checkbox or radio, checkbox, radio, custom `role="button"`/`tab`/`switch`) shows `cursor: pointer`, set once in the base CSS layer; disabled controls show `cursor: not-allowed`
 - **REQUIRED**: actions are `<button>`, navigation is `<a href>` to a real destination; no clickable `div`/`span`, and a custom control that cannot be native also meets R-32
 - **REQUIRED**: every control has an accessible name (icon-only buttons get `aria-label` or visually hidden text, the icon gets `aria-hidden="true"`); every image has `alt` (empty `alt=""` when decorative); every form field has a visible `<label>`
 - **REQUIRED**: distinct hover, active, and disabled states, never color alone
@@ -696,8 +696,8 @@ Before declaring the design done, answer every question below. All answers must 
 - [ ] Are there any fabricated security, compliance, performance, or customer claims? *(R-36)*
 - [ ] Was the design built without direction and not labeled *"draft without direction"* with honest default dials ENERGY 1 / RHYTHM 1 / MOTION 1? *(R-37)*
 - [ ] Is there any realistically-styled content that was fabricated (testimonials, features, statistics, ghost links, fictional team) without a real source? *(R-38)*
-- [ ] Does any control lack `cursor: pointer`, a native element, an accessible name, or hover/active/disabled states; any field a visible label or image its `alt`; does motion ignore `prefers-reduced-motion`; or does a whole document lack `lang`, `<title>`, or landmarks, or block zoom? *(R-39)*
-- [ ] Does any media element ship without dimensions, the hero image load lazily or without `fetchpriority="high"`, a third-party script block render in `<head>`, or a performance number get reported that was not measured? *(R-40)*
+- [ ] Does any control lack `cursor: pointer`, a native element, an accessible name, or hover/active/disabled states; any field a visible label or image its `alt`; does motion ignore `prefers-reduced-motion` or run longer than 5 seconds without a pause control; does ARIA contradict the native role; or does a whole document lack `lang`, `<title>`, or landmarks, or block zoom? *(R-39)*
+- [ ] Does any media element ship without dimensions, any late content without reserved space, the hero image load lazily or without `fetchpriority="high"`, a third-party script block render in `<head>`, or a performance number get reported that was not measured? *(R-40)*
 
 ### Block 2: Purpose-Gate (technique allowed, reason required)
 

@@ -574,6 +574,7 @@ Load it when the AI builds or restyles anything you can see: color, layout, card
 | App & Dashboard | Default Dashboard Shell, Stat Cards With Invented Numbers, Filler Activity Feed, Charts Without a Question, Generic Table Columns, Filler Data in Fields and Columns, Placeholder Empty and Loading States |
 | Motion | Endless Pulses and Loops, Template Animations Stacked |
 | Performance | Unsized Media That Shifts the Layout, Hero Image Loaded Like Any Other Image, Render-Blocking Third-Party Script |
+| Page Basics | Web Baseline Checklist |
 
 ### antislop-copywriting
 

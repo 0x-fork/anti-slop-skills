@@ -12,6 +12,7 @@ Set once, in the base CSS layer, so no component has to remember it (R-39). A CS
 
 ```css
 a[href], button, summary, select, label[for],
+label:has(> input[type="checkbox"], > input[type="radio"]),
 [role="button"], [role="link"], [role="tab"], [role="menuitem"], [role="option"], [role="switch"],
 input[type="checkbox"], input[type="radio"], input[type="file"],
 input[type="submit"], input[type="button"], input[type="reset"], input[type="range"], input[type="color"] {
@@ -20,37 +21,45 @@ input[type="submit"], input[type="button"], input[type="reset"], input[type="ran
 :disabled, [aria-disabled="true"] { cursor: not-allowed; }
 ```
 
-Text inputs keep `cursor: text`, and drag handles use `grab` / `grabbing`.
+Text inputs keep `cursor: text`, and drag handles use `grab` / `grabbing`. An implicit label that wraps a checkbox or radio is included, since clicking it toggles the control.
 
 ## Modal focus trap
 
 Trap keyboard focus inside a modal dialog so Tab/Shift+Tab cycle through its focusable elements and Escape closes it.
 
 ```javascript
-function openModal(modal) {
-  const focusableElements = modal.querySelectorAll(
+function trapFocus(modal, onClose) {
+  const focusable = modal.querySelectorAll(
     'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
   );
-  const firstElement = focusableElements[0];
-  const lastElement = focusableElements[focusableElements.length - 1];
+  if (focusable.length === 0) return () => {};
 
-  modal.addEventListener('keydown', (e) => {
-    if (e.key === 'Tab') {
-      if (e.shiftKey && document.activeElement === firstElement) {
-        e.preventDefault();
-        lastElement.focus();
-      } else if (!e.shiftKey && document.activeElement === lastElement) {
-        e.preventDefault();
-        firstElement.focus();
-      }
-    }
-    if (e.key === 'Escape') {
-      closeModal();
-    }
-  });
+  const first = focusable[0];
+  const last = focusable[focusable.length - 1];
 
-  firstElement.focus();
+  function onKeydown(e) {
+    if (e.key === 'Escape') return onClose();
+    if (e.key !== 'Tab') return;
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      first.focus();
+    }
+  }
+
+  modal.addEventListener('keydown', onKeydown);
+  first.focus();
+  return () => modal.removeEventListener('keydown', onKeydown);
 }
+```
+
+Call the returned function when the dialog closes, or a second open stacks a second listener:
+
+```javascript
+const release = trapFocus(dialog, () => dialog.close());
+dialog.addEventListener('close', release, { once: true });
 ```
 
 The native `<dialog>` element handles focus trapping automatically, prefer it when browser support allows.
@@ -95,6 +104,7 @@ Announce errors to screen readers and focus the first invalid field on submit.
 
 ```html
 <form novalidate>
+  <div id="error-summary" tabindex="-1" hidden></div>
   <div class="field" aria-live="polite">
     <label for="email">Email</label>
     <input type="email" id="email"
@@ -108,19 +118,22 @@ Announce errors to screen readers and focus the first invalid field on submit.
 ```
 
 ```javascript
-form.addEventListener('submit', (e) => {
-  const firstError = form.querySelector('[aria-invalid="true"]');
-  if (firstError) {
-    e.preventDefault();
-    firstError.focus();
+const form = document.querySelector('form');
+const summary = document.getElementById('error-summary');
 
-    const errorSummary = document.getElementById('error-summary');
-    errorSummary.textContent =
-      `${errors.length} errors found. Please fix them and try again.`;
-    errorSummary.focus();
-  }
+form.addEventListener('submit', (e) => {
+  const invalid = [...form.querySelectorAll('[aria-invalid="true"]')];
+  if (invalid.length === 0) return;
+
+  e.preventDefault();
+  summary.textContent =
+    `${invalid.length} errors found. Please fix them and try again.`;
+  summary.hidden = false;
+  invalid[0].focus();
 });
 ```
+
+This handler reports what the validation already marked: set `aria-invalid="true"` and the field's error text before submit runs.
 
 ---
 
@@ -213,12 +226,12 @@ Use `aria-live` to announce dynamic content changes to screen readers without mo
 
 ```html
 <!-- Status updates (polite, waits for pause in speech) -->
-<div aria-live="polite" aria-atomic="true" class="status">
+<div id="polite-announcer" aria-live="polite" aria-atomic="true" class="status">
   <!-- Content updates announced to screen readers -->
 </div>
 
 <!-- Urgent alerts (assertive, interrupts) -->
-<div role="alert" aria-live="assertive">
+<div id="assertive-announcer" role="alert" aria-live="assertive">
   <!-- Interrupts current announcement -->
 </div>
 ```

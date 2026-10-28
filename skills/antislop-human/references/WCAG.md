@@ -73,7 +73,13 @@
 
 | Criterion | Description |
 |-----------|-------------|
+| **1.2.6** Sign Language (Prerecorded) | Pre-recorded video has a sign language interpretation |
+| **1.2.7** Extended Audio Description (Prerecorded) | Video pauses long enough for audio description to convey the visuals |
+| **1.2.8** Media Alternative (Prerecorded) | A text alternative covers everything the pre-recorded media shows |
+| **1.2.9** Audio-only (Live) | Live audio-only content has a text alternative |
+| **1.3.6** Identify Purpose | Icons and regions have a programmatically determined purpose |
 | **1.4.6** Contrast (Enhanced) | 7:1 for normal text, 4.5:1 for large text |
+| **1.4.7** Low or No Background Audio | Speech stays understandable over background sound |
 | **1.4.8** Visual Presentation | Foreground/background colors can be selected |
 | **1.4.9** Images of Text (No Exception) | No images of text |
 | **2.1.3** Keyboard (No Exception) | All functionality keyboard accessible |
@@ -88,6 +94,8 @@
 | **2.4.10** Section Headings | Sections have headings |
 | **2.4.12** Focus Not Obscured (Enhanced) | No part of the focused element is hidden by author-created content |
 | **2.4.13** Focus Appearance | Focus indicator has sufficient area, contrast, and is not obscured |
+| **2.5.5** Target Size (Enhanced) | Interactive targets are at least 44×44 CSS pixels |
+| **2.5.6** Concurrent Input Mechanisms | Content does not restrict which input modality a person uses |
 | **3.1.3** Unusual Words | Definitions available for unusual words |
 | **3.1.4** Abbreviations | Abbreviations expanded |
 | **3.1.5** Reading Level | Alternative content for complex text |
